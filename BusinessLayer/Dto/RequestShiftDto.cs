@@ -1,3 +1,4 @@
+
 using System.ComponentModel.DataAnnotations.Schema;
 using BusinessLayer.Models;
 
@@ -8,6 +9,10 @@ public class RequestShiftDto
     public int ShiftId { get; set; }
     public DateTime StartTime { get; set; }
     public DateTime? EndTime { get; set; }
+    
+    [ForeignKey("EmployeeId")]
+    public int EmployeeId { get; set; }
 
+    
     
 }

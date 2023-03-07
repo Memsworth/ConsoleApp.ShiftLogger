@@ -27,8 +27,7 @@ namespace ShiftLoggerApi.Controllers
           }
 
           return await _context.Employees
-              .Select(x => new RequestEmployeeDto(x))
-              .ToListAsync();
+              .Select(x => EmployeeDto(x)).ToListAsync();
         }
 
         // GET: api/Employee/5
@@ -43,20 +42,20 @@ namespace ShiftLoggerApi.Controllers
               return NotFound();
           }
 
-          return new RequestEmployeeDto(employee);
+          return EmployeeDto(employee);
         }
 
         // PUT: api/Employee/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutEmployee(int id, Employee employee)
+        public async Task<IActionResult> PutEmployee(int id, RequestEmployeeDto employeeDto)
         {
-            if (id != employee.EmployeeId)
+            if (id != employeeDto.EmployeeId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(employee).State = EntityState.Modified;
+            _context.Entry(employeeDto).State = EntityState.Modified;
 
             try
             {
@@ -88,13 +87,14 @@ namespace ShiftLoggerApi.Controllers
                 DateOfBirth = employeeDto.DateOfBirth,
                 Email = employeeDto.Email
             };
+            
           if (_context.Employees == null)
           {
               return Problem("Entity set 'ShiftLoggerDbContext.Employees'  is null.");
           }
           _context.Employees.Add(employee);
           await _context.SaveChangesAsync();
-          return CreatedAtAction("GetEmployee", new { id = employee.EmployeeId }, employeeDto);
+          return CreatedAtAction("GetEmployee", new { id = employee.EmployeeId }, EmployeeDto(employee));
         }
 
         // DELETE: api/Employee/5
@@ -121,5 +121,13 @@ namespace ShiftLoggerApi.Controllers
         {
             return (_context.Employees?.Any(e => e.EmployeeId == id)).GetValueOrDefault();
         }
+
+        private static RequestEmployeeDto EmployeeDto(Employee employee) => new()
+        {
+            EmployeeId = employee.EmployeeId,
+            Name = employee.Name,
+            DateOfBirth = employee.DateOfBirth,
+            Email = employee.Email,
+        };
     }
 }

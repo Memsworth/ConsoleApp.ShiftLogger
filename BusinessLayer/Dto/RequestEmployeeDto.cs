@@ -9,11 +9,4 @@ public class RequestEmployeeDto
     public DateTime DateOfBirth { get; set; }
     public string Email { get; set; }
     
-    public RequestEmployeeDto(Employee employee)
-    {
-        EmployeeId = employee.EmployeeId;
-        Name = employee.Name;
-        DateOfBirth = employee.DateOfBirth;
-        Email = employee.Email;
-    }
 }
