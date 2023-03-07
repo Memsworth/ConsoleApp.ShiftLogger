@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using BusinessLayer.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BusinessLayer.Models;
@@ -23,31 +19,31 @@ namespace ShiftLoggerApi.Controllers
 
         // GET: api/Employee
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Employee>>> GetEmployees()
+        public async Task<ActionResult<IEnumerable<RequestEmployeeDto>>> GetEmployees()
         {
           if (_context.Employees == null)
           {
               return NotFound();
           }
-            return await _context.Employees.ToListAsync();
+
+          return await _context.Employees
+              .Select(x => new RequestEmployeeDto(x))
+              .ToListAsync();
         }
 
         // GET: api/Employee/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Employee>> GetEmployee(int id)
+        public async Task<ActionResult<RequestEmployeeDto>> GetEmployee(int id)
         {
-          if (_context.Employees == null)
+            
+            var employee = await _context.Employees.FindAsync(id);
+
+          if (employee == null)
           {
               return NotFound();
           }
-            var employee = await _context.Employees.FindAsync(id);
 
-            if (employee == null)
-            {
-                return NotFound();
-            }
-
-            return employee;
+          return new RequestEmployeeDto(employee);
         }
 
         // PUT: api/Employee/5
@@ -55,7 +51,7 @@ namespace ShiftLoggerApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutEmployee(int id, Employee employee)
         {
-            if (id != employee.Id)
+            if (id != employee.EmployeeId)
             {
                 return BadRequest();
             }
@@ -84,16 +80,21 @@ namespace ShiftLoggerApi.Controllers
         // POST: api/Employee
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Employee>> PostEmployee(Employee employee)
+        public async Task<ActionResult<RequestEmployeeDto>> PostEmployee(RequestEmployeeDto employeeDto)
         {
+            var employee = new Employee
+            {
+                Name = employeeDto.Name,
+                DateOfBirth = employeeDto.DateOfBirth,
+                Email = employeeDto.Email
+            };
           if (_context.Employees == null)
           {
               return Problem("Entity set 'ShiftLoggerDbContext.Employees'  is null.");
           }
-            _context.Employees.Add(employee);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetEmployee", new { id = employee.Id }, employee);
+          _context.Employees.Add(employee);
+          await _context.SaveChangesAsync();
+          return CreatedAtAction("GetEmployee", new { id = employee.EmployeeId }, employeeDto);
         }
 
         // DELETE: api/Employee/5
@@ -118,7 +119,7 @@ namespace ShiftLoggerApi.Controllers
 
         private bool EmployeeExists(int id)
         {
-            return (_context.Employees?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Employees?.Any(e => e.EmployeeId == id)).GetValueOrDefault();
         }
     }
 }

@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BusinessLayer.Models;
@@ -55,7 +50,7 @@ namespace ShiftLoggerApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutShift(int id, Shift shift)
         {
-            if (id != shift.Id)
+            if (id != shift.ShiftId)
             {
                 return BadRequest();
             }
@@ -93,7 +88,7 @@ namespace ShiftLoggerApi.Controllers
             _context.Shifts.Add(shift);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetShift", new { id = shift.Id }, shift);
+            return CreatedAtAction("GetShift", new { id = shift.ShiftId }, shift);
         }
 
         // DELETE: api/Shift/5
@@ -118,7 +113,7 @@ namespace ShiftLoggerApi.Controllers
 
         private bool ShiftExists(int id)
         {
-            return (_context.Shifts?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Shifts?.Any(e => e.ShiftId == id)).GetValueOrDefault();
         }
     }
 }

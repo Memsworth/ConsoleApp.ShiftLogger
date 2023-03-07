@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>net7.0</TargetFramework>
-        <Nullable>enable</Nullable>
+        <Nullable>disable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
 
@@ -24,6 +24,10 @@
     <ItemGroup>
       <ProjectReference Include="..\BusinessLayer\BusinessLayer.csproj" />
       <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Controllers" />
     </ItemGroup>
 
 </Project>

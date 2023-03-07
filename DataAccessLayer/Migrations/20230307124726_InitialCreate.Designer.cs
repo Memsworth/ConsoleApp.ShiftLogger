@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccessLayer.Migrations
 {
     [DbContext(typeof(ShiftLoggerDbContext))]
-    [Migration("20230307073550_InitialCreate")]
+    [Migration("20230307124726_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -22,7 +22,7 @@ namespace DataAccessLayer.Migrations
 
             modelBuilder.Entity("BusinessLayer.Models.Employee", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("EmployeeId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -37,19 +37,16 @@ namespace DataAccessLayer.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+                    b.HasKey("EmployeeId");
 
                     b.ToTable("Employees");
                 });
 
             modelBuilder.Entity("BusinessLayer.Models.Shift", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ShiftId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("Duration")
-                        .HasColumnType("TEXT");
 
                     b.Property<int>("EmployeeId")
                         .HasColumnType("INTEGER");
@@ -60,7 +57,7 @@ namespace DataAccessLayer.Migrations
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+                    b.HasKey("ShiftId");
 
                     b.HasIndex("EmployeeId");
 
