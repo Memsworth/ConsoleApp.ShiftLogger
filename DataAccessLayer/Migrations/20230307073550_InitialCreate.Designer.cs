@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccessLayer.Migrations
 {
     [DbContext(typeof(ShiftLoggerDbContext))]
-    [Migration("20230306225624_InitialCreate")]
+    [Migration("20230307073550_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -26,7 +26,7 @@ namespace DataAccessLayer.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateOnly>("DateOfBirth")
+                    b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Email")
