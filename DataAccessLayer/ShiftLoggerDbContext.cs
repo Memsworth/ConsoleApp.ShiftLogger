@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataAccessLayer
 {
-    internal class ShiftLoggerDbContext : DbContext
+    public class ShiftLoggerDbContext : DbContext
     {
         public ShiftLoggerDbContext(DbContextOptions<ShiftLoggerDbContext> options) : base(options) { }
 
