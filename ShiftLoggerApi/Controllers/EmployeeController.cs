@@ -19,7 +19,7 @@ namespace ShiftLoggerApi.Controllers
 
         // GET: api/Employee
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<RequestEmployeeDto>>> GetEmployees()
+        public async Task<ActionResult<IEnumerable<EmployeeRequestDTO>>> GetEmployees()
         {
           if (_context.Employees == null)
           {
@@ -32,7 +32,7 @@ namespace ShiftLoggerApi.Controllers
 
         // GET: api/Employee/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<RequestEmployeeDto>> GetEmployee(int id)
+        public async Task<ActionResult<EmployeeRequestDTO>> GetEmployee(int id)
         {
             
             var employee = await _context.Employees.FindAsync(id);
@@ -48,7 +48,7 @@ namespace ShiftLoggerApi.Controllers
         // PUT: api/Employee/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutEmployee(int id, RequestEmployeeDto employeeDto)
+        public async Task<IActionResult> PutEmployee(int id, EmployeeRequestDTO employeeDto)
         {
             if (id != employeeDto.EmployeeId)
             {
@@ -79,7 +79,7 @@ namespace ShiftLoggerApi.Controllers
         // POST: api/Employee
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<RequestEmployeeDto>> PostEmployee(RequestEmployeeDto employeeDto)
+        public async Task<ActionResult<EmployeeRequestDTO>> PostEmployee(EmployeeRequestDTO employeeDto)
         {
             var employee = new Employee
             {
@@ -122,7 +122,7 @@ namespace ShiftLoggerApi.Controllers
             return (_context.Employees?.Any(e => e.EmployeeId == id)).GetValueOrDefault();
         }
 
-        private static RequestEmployeeDto EmployeeDto(Employee employee) => new()
+        private static EmployeeRequestDTO EmployeeDto(Employee employee) => new()
         {
             EmployeeId = employee.EmployeeId,
             Name = employee.Name,

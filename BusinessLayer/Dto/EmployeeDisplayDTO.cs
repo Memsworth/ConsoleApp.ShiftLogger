@@ -1,6 +1,6 @@
 namespace BusinessLayer.Dto;
 
-public class DisplayEmployeeDto
+public class ShiftDisplayDTO
 {
     
 }

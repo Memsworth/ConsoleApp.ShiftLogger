@@ -19,7 +19,7 @@ namespace ShiftLoggerApi.Controllers
 
         // GET: api/Shift
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<RequestShiftDto>>> GetShifts()
+        public async Task<ActionResult<IEnumerable<ShiftRequestDTO>>> GetShifts()
         {
           if (_context.Shifts == null)
           {
@@ -31,7 +31,7 @@ namespace ShiftLoggerApi.Controllers
 
         // GET: api/Shift/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<RequestShiftDto>> GetShift(int id)
+        public async Task<ActionResult<ShiftRequestDTO>> GetShift(int id)
         {
           if (_context.Shifts == null)
           {
@@ -81,7 +81,7 @@ namespace ShiftLoggerApi.Controllers
         // POST: api/Shift
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<RequestShiftDto>> PostShift(RequestShiftDto shiftDto)
+        public async Task<ActionResult<ShiftRequestDTO>> PostShift(ShiftRequestDTO shiftDto)
         {
             var shift = new Shift
             {
@@ -124,7 +124,7 @@ namespace ShiftLoggerApi.Controllers
             return (_context.Shifts?.Any(e => e.ShiftId == id)).GetValueOrDefault();
         }
 
-        private static RequestShiftDto ShiftDto(Shift shift) => new()
+        private static ShiftRequestDTO ShiftDto(Shift shift) => new()
         {
             ShiftId = shift.ShiftId,
             StartTime = shift.StartTime,
