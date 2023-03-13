@@ -50,13 +50,16 @@ namespace ShiftLoggerApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutEmployee(int id, EmployeeRequestDTO employeeDto)
         {
-            if (id != employeeDto.EmployeeId)
+            var employeeItem = await _context.Employees.FindAsync(id);
+            if (employeeItem == null)
             {
-                return BadRequest();
+                return NotFound();
             }
 
-            _context.Entry(employeeDto).State = EntityState.Modified;
-
+            employeeItem.Name = employeeDto.Name;
+            employeeItem.Email = employeeDto.Email;
+            employeeItem.DateOfBirth = employeeDto.DateOfBirth;
+            
             try
             {
                 await _context.SaveChangesAsync();
@@ -125,6 +128,13 @@ namespace ShiftLoggerApi.Controllers
         private static EmployeeRequestDTO EmployeeDto(Employee employee) => new()
         {
             EmployeeId = employee.EmployeeId,
+            Name = employee.Name,
+            DateOfBirth = employee.DateOfBirth,
+            Email = employee.Email,
+        };
+        
+        private static EmployeeUpdateDTO EmployeeUpdateDto(Employee employee) => new()
+        {
             Name = employee.Name,
             DateOfBirth = employee.DateOfBirth,
             Email = employee.Email,

@@ -50,15 +50,17 @@ namespace ShiftLoggerApi.Controllers
         // PUT: api/Shift/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutShift(int id, Shift shift)
+        public async Task<IActionResult> PutShift(int id, ShiftUpdateDTO shift)
         {
-            if (id != shift.ShiftId)
+            var shiftItem = await _context.Shifts.FindAsync(id);
+            if (shiftItem == null)
             {
-                return BadRequest();
+                return NotFound();
             }
 
-            _context.Entry(shift).State = EntityState.Modified;
-
+            shiftItem.StartTime = shift.StartTime;
+            shiftItem.EndTime = shift.EndTime;
+            
             try
             {
                 await _context.SaveChangesAsync();
@@ -130,6 +132,13 @@ namespace ShiftLoggerApi.Controllers
             StartTime = shift.StartTime,
             EndTime = shift.EndTime,
             EmployeeId = shift.EmployeeId,
+        };
+        
+        private static ShiftUpdateDTO ShiftUpdateDto(Shift shift) => new()
+        {
+            ShiftId = shift.ShiftId,
+            StartTime = shift.StartTime,
+            EndTime = shift.EndTime,
         };
     }
 }
