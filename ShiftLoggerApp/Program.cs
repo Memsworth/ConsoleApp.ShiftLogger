@@ -1,23 +1,23 @@
-﻿// See https://aka.ms/new-console-template for more information
-
+﻿using BusinessLayer.Dto;
 using ShiftLoggerApp.Services;
-
 Console.WriteLine("Hello, World!");
 
 bool appEnd = false;
-var api = new Client("https://localhost:7199/");
+var api = new Client("http://localhost:5043/");
 var displayService = new DisplayService();
+var employeeService = new EmployeeService();
 
-displayService.DisplayMenu();
 
 while (!appEnd)
 {
+    displayService.DisplayMenu();
     int choice = int.Parse(Console.ReadLine()!);
 
     switch (choice)
     {
         case 1:
             displayService.DisplaySubMenu("Employee");
+            await EmployeeCrud(employeeService, api);
             break;
         case 2:
             displayService.DisplaySubMenu("Shift");
@@ -29,4 +29,40 @@ while (!appEnd)
         case 5:
             return;
     }
+}
+
+async Task EmployeeCrud(EmployeeService employeeService, Client httpClient)
+{
+    Console.WriteLine("This employee CRUD Choose");
+    int choice = int.Parse(Console.ReadLine());
+
+    switch (choice)
+    {
+        case 1:
+            var employeeToAdd = makeEmployeeDTO(new UserInputService());
+            await employeeService.AddEmployee(employeeToAdd, httpClient);
+            break;
+        case 2:
+            Console.WriteLine("employee to delete id: ");
+            var empoyeeId = int.Parse(Console.ReadLine());
+            await employeeService.DeleteEmployee(empoyeeId, httpClient);
+            break;
+        case 4:
+            break;
+    }
+}
+
+EmployeeUpdateDTO makeEmployeeDTO(UserInputService userInputService)
+{
+    var name = userInputService.GetInput("Enter a name", userInputService.GetValidName);
+    Console.WriteLine("enterdob");
+    var dateOfBirth = Console.ReadLine();
+    var email = userInputService.GetInput("Enter an email", userInputService.GetValidEmail);
+
+    return new EmployeeUpdateDTO()
+    {
+        DateOfBirth = DateTime.Parse(dateOfBirth),
+        Email = email,
+        Name = name
+    };
 }
