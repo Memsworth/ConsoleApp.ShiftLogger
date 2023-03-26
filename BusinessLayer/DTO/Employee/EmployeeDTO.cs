@@ -1,6 +1,6 @@
-namespace BusinessLayer.Dto;
+namespace BusinessLayer.DTO.Employee;
 
-public class EmployeeRequestDTO
+public class EmployeeDTO
 {
     public int EmployeeId { get; set; }
     public string Name { get; set; }

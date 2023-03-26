@@ -1,6 +1,6 @@
-namespace BusinessLayer.Dto;
+namespace BusinessLayer.DTO.Employee;
 
-public class EmployeeUpdateDTO
+public class DisplayEmployeeDTO
 {
     public string Name { get; set; }
     public DateTime DateOfBirth { get; set; }

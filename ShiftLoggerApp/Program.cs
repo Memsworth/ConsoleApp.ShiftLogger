@@ -23,6 +23,7 @@ while (!appEnd)
             displayService.DisplaySubMenu("Shift");
             break;
         case 3:
+            StartShift();
             break;
         case 4:
             break;
@@ -31,6 +32,10 @@ while (!appEnd)
     }
 }
 
+void StartShift()
+{
+    
+}
 async Task EmployeeCrud(EmployeeService employeeService, Client httpClient)
 {
     Console.WriteLine("This employee CRUD Choose");
@@ -46,6 +51,12 @@ async Task EmployeeCrud(EmployeeService employeeService, Client httpClient)
             Console.WriteLine("employee to delete id: ");
             var empoyeeId = int.Parse(Console.ReadLine());
             await employeeService.DeleteEmployee(empoyeeId, httpClient);
+            break;
+        case 3:
+            Console.WriteLine("employee id to update: ");
+            var employeeId = int.Parse(Console.ReadLine());
+            var editEmp = makeEmployeeDTO(new UserInputService());
+            await employeeService.UpdateEmployee(editEmp, employeeId, httpClient);
             break;
         case 4:
             break;
