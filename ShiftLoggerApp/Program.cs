@@ -4,23 +4,22 @@ Console.WriteLine("Hello, World!");
 
 bool appEnd = false;
 var api = new Client("http://localhost:5043/");
-var displayService = new DisplayService();
 //var employeeService = new EmployeeService();
 
 
 while (!appEnd)
 {
-    displayService.DisplayMenu();
+    DisplayService.DisplayMenu();
     int choice = int.Parse(Console.ReadLine()!);
 
     switch (choice)
     {
         case 1:
-            displayService.DisplaySubMenu("Employee");
+            DisplayService.DisplaySubMenu("Employee");
             //await EmployeeCrud(employeeService, api);
             break;
         case 2:
-            displayService.DisplaySubMenu("Shift");
+            DisplayService.DisplaySubMenu("Shift");
             break;
         case 3:
             StartShift();

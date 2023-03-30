@@ -1,16 +1,10 @@
+using System.Text.RegularExpressions;
+using ShiftLoggerApp.Helpers;
+
 namespace ShiftLoggerApp.Services;
 
 public class UserInputService
 {
-    private ValidatorService _validatorService { get; }
-    private ValidatorServiceHelper _validatorServiceHelper { get; }
-    
-    public UserInputService()
-    {
-        _validatorService = new ValidatorService();
-        _validatorServiceHelper = new ValidatorServiceHelper();
-    }
-    
     public string GetInput(string message, Func<string, bool> validatorFunc)
     {
         Console.Write(message);
@@ -24,9 +18,9 @@ public class UserInputService
 
 
     public bool GetValidName(string input) =>
-        _validatorService.ValidateInput(input, _validatorServiceHelper._NameRegex);
+        ValidationHelper.ValidateInput(input, ValidationHelper.NameRegex);
 
-    public bool GetValidDob(string input) => _validatorService.ValidateInput(input, _validatorServiceHelper._DobRegex);
+    public bool GetValidDob(string input) => ValidationHelper.ValidateInput(input, ValidationHelper.DobRegex);
 
-    public bool GetValidEmail(string input) => _validatorService.ValidEmail(input);
+    public bool GetValidEmail(string input) => ValidationHelper.ValidEmail(input);
 }

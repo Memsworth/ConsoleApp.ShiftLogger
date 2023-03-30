@@ -4,14 +4,14 @@ namespace ShiftLoggerApp.Services;
 
 public class DisplayService
 {
-    public void DisplayTable<T>(List<T>? data, string tableName) where T : class
+    private static void DisplayTable<T>(List<T>? data, string tableName) where T : class
     {
         ConsoleTableBuilder.From(data).WithTitle(tableName).ExportAndWriteLine();
     }
 
     private record DisplayMenuItem(string Id, string Value);
 
-    public void DisplayMenu()
+    public static void DisplayMenu()
     {
         var tableData = new List<DisplayMenuItem>
         {
@@ -21,10 +21,11 @@ public class DisplayService
             new("4", "start Shift"),
             new("5", "Exit"),
         };
-        ConsoleTableBuilder.From(tableData).WithTitle("Main Menu").ExportAndWriteLine();
+
+        DisplayTable(tableData, "Main menu");
     }
 
-    public void DisplaySubMenu(string title)
+    public static void DisplaySubMenu(string title)
     {
         var tableData = new List<DisplayMenuItem>
         {
@@ -33,6 +34,6 @@ public class DisplayService
             new("3", "Delete"),
             new("4", "Back")
         };
-        ConsoleTableBuilder.From(tableData).WithTitle(title).ExportAndWriteLine();
+        DisplayTable(tableData, title);
     }
 }
