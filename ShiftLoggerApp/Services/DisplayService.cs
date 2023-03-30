@@ -9,30 +9,30 @@ public class DisplayService
         ConsoleTableBuilder.From(data).WithTitle(tableName).ExportAndWriteLine();
     }
 
+    private record DisplayMenuItem(string Id, string Value);
+
     public void DisplayMenu()
     {
-        var tableData = new List<List<object>>
+        var tableData = new List<DisplayMenuItem>
         {
-            new List<object>{ "1", "Employees"},
-            new List<object>{ "2", "Shifts"},
-            new List<object>{ "3", "Display"},
-            new List<object>{ "4", "Start Shift"},
-            new List<object>{ "5", "Exit"}
+            new("1", "Employees"),
+            new("2", "Shifts"),
+            new("3", "Display"),
+            new("4", "start Shift"),
+            new("5", "Exit"),
         };
         ConsoleTableBuilder.From(tableData).WithTitle("Main Menu").ExportAndWriteLine();
     }
 
     public void DisplaySubMenu(string title)
     {
-        var tableData = new List<List<object>>
+        var tableData = new List<DisplayMenuItem>
         {
-            new List<object>{ "1", "Add"},
-            new List<object>{ "2", "Edit/Update"},
-            new List<object>{ "3", "Delete"},
-            new List<object>{ "4", "Back"}
+            new("1", "add"),
+            new("2", "Edit/Update"),
+            new("3", "Delete"),
+            new("4", "Back")
         };
         ConsoleTableBuilder.From(tableData).WithTitle(title).ExportAndWriteLine();
     }
-    
-    
 }
