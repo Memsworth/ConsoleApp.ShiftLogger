@@ -1,9 +1,6 @@
-using System.Text.RegularExpressions;
-using ShiftLoggerApp.Helpers;
+namespace ShiftLoggerApp.Validation;
 
-namespace ShiftLoggerApp.Services;
-
-public class UserInputService
+public class UserInputValidator
 {
     public string GetInput(string message, Func<string, bool> validatorFunc)
     {
