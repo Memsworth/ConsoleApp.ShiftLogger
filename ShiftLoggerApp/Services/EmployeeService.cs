@@ -1,9 +1,9 @@
 using System.Net.Http.Json;
-using BusinessLayer.Dto;
+//using BusinessLayer.Dto;
 
 namespace ShiftLoggerApp.Services;
 
-public class EmployeeService 
+/*public class EmployeeService 
 {
     
     public async Task AddEmployee(BusinessLayer.Dto.EmployeeUpdateDTO employeeDTO, Client httpClient)
@@ -27,4 +27,4 @@ public class EmployeeService
     {
         
     }
-}
+}*/
