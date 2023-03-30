@@ -2,7 +2,7 @@ namespace ShiftLoggerApp.Services;
 
 public class Client
 {
-    public HttpClient ApiClient { get; private set; }
+    public HttpClient ApiClient { get; }
 
     public Client(string url)
     {
