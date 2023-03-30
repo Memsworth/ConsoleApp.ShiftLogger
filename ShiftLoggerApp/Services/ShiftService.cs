@@ -1,3 +1,5 @@
+using BusinessLayer.DTO.Shift;
+
 namespace ShiftLoggerApp.Services;
 
 public class ShiftService
