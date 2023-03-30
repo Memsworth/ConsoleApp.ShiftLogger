@@ -12,47 +12,47 @@ namespace ShiftLoggerApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EmployeeController : ControllerBase
+    public class ShiftsController : ControllerBase
     {
         private readonly ShiftLoggerDbContext _context;
 
-        public EmployeeController(ShiftLoggerDbContext context)
+        public ShiftsController(ShiftLoggerDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/Employee
+        // GET: api/Shifts
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Employee>>> GetEmployees()
+        public async Task<ActionResult<IEnumerable<Shift>>> GetShifts()
         {
-            return await _context.Employees.ToListAsync();
+            return await _context.Shifts.ToListAsync();
         }
 
-        // GET: api/Employee/5
+        // GET: api/Shifts/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Employee>> GetEmployee(int id)
+        public async Task<ActionResult<Shift>> GetShift(int id)
         {
-            var employee = await _context.Employees.FindAsync(id);
+            var shift = await _context.Shifts.FindAsync(id);
 
-            if (employee == null)
+            if (shift == null)
             {
                 return NotFound();
             }
 
-            return employee;
+            return shift;
         }
 
-        // PUT: api/Employee/5
+        // PUT: api/Shifts/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutEmployee(int id, Employee employee)
+        public async Task<IActionResult> PutShift(int id, Shift shift)
         {
-            if (id != employee.EmployeeId)
+            if (id != shift.ShiftId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(employee).State = EntityState.Modified;
+            _context.Entry(shift).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace ShiftLoggerApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!EmployeeExists(id))
+                if (!ShiftExists(id))
                 {
                     return NotFound();
                 }
@@ -73,36 +73,36 @@ namespace ShiftLoggerApi.Controllers
             return NoContent();
         }
 
-        // POST: api/Employee
+        // POST: api/Shifts
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Employee>> PostEmployee(Employee employee)
+        public async Task<ActionResult<Shift>> PostShift(Shift shift)
         {
-            _context.Employees.Add(employee);
+            _context.Shifts.Add(shift);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetEmployee", new { id = employee.EmployeeId }, employee);
+            return CreatedAtAction("GetShift", new { id = shift.ShiftId }, shift);
         }
 
-        // DELETE: api/Employee/5
+        // DELETE: api/Shifts/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteEmployee(int id)
+        public async Task<IActionResult> DeleteShift(int id)
         {
-            var employee = await _context.Employees.FindAsync(id);
-            if (employee == null)
+            var shift = await _context.Shifts.FindAsync(id);
+            if (shift == null)
             {
                 return NotFound();
             }
 
-            _context.Employees.Remove(employee);
+            _context.Shifts.Remove(shift);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool EmployeeExists(int id)
+        private bool ShiftExists(int id)
         {
-            return _context.Employees.Any(e => e.EmployeeId == id);
+            return _context.Shifts.Any(e => e.ShiftId == id);
         }
     }
 }
