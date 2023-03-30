@@ -1,3 +1,5 @@
+using BusinessLayer.Models;
+
 namespace BusinessLayer.DTO.Employee;
 
 public class EmployeeDTO
@@ -6,4 +8,5 @@ public class EmployeeDTO
     public string Name { get; set; }
     public DateTime DateOfBirth { get; set; }
     public string Email { get; set; }
+
 }

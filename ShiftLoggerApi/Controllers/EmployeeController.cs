@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BusinessLayer.DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BusinessLayer.Models;
 using DataAccessLayer;
+using BusinessLayer.DTO.Employee;
 
 namespace ShiftLoggerApi.Controllers
 {
@@ -23,14 +25,14 @@ namespace ShiftLoggerApi.Controllers
 
         // GET: api/Employee
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Employee>>> GetEmployees()
+        public async Task<ActionResult<IEnumerable<EmployeeDTO>>> GetEmployees()
         {
-            return await _context.Employees.ToListAsync();
+            return await _context.Employees.Select(x => x.ToDto()).ToListAsync();
         }
 
         // GET: api/Employee/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Employee>> GetEmployee(int id)
+        public async Task<ActionResult<EmployeeDTO>> GetEmployee(int id)
         {
             var employee = await _context.Employees.FindAsync(id);
 
@@ -39,21 +41,18 @@ namespace ShiftLoggerApi.Controllers
                 return NotFound();
             }
 
-            return employee;
+            return Ok(employee.ToDto());
         }
 
         // PUT: api/Employee/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutEmployee(int id, Employee employee)
+        public async Task<IActionResult> PutEmployee(int id, EmployeePostDTO employeeDTO)
         {
-            if (id != employee.EmployeeId)
-            {
-                return BadRequest();
-            }
+            var employee = await _context.Employees.FindAsync(id);
+            if (employee == null) return BadRequest();
 
-            _context.Entry(employee).State = EntityState.Modified;
-
+            employee.UpdateItems(employeeDTO);
             try
             {
                 await _context.SaveChangesAsync();
@@ -76,12 +75,13 @@ namespace ShiftLoggerApi.Controllers
         // POST: api/Employee
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Employee>> PostEmployee(Employee employee)
+        public async Task<ActionResult<EmployeePostDTO>> PostEmployee(EmployeePostDTO employeeDTO)
         {
-            _context.Employees.Add(employee);
+            var employeeItem = employeeDTO.ToDbo();
+            _context.Employees.Add(employeeItem);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetEmployee", new { id = employee.EmployeeId }, employee);
+            return CreatedAtAction("GetEmployee", new { id = employeeItem.EmployeeId }, employeeItem.ToDto());
         }
 
         // DELETE: api/Employee/5
