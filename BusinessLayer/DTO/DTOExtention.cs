@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.DTO.Employee;
+using BusinessLayer.DTO.Shift;
 
 namespace BusinessLayer.DTO
 {
@@ -26,6 +27,28 @@ namespace BusinessLayer.DTO
             employee.Name = employeeDto.Name;
             employee.DateOfBirth = employeeDto.DateOfBirth;
             employee.Email = employeeDto.Email;
+        }
+        
+        public static ShiftDTO ToDto(this BusinessLayer.Models.Shift shift) => new ShiftDTO()
+        {
+            ShiftId = shift.ShiftId,
+            StartTime = shift.StartTime,
+            EndTime = shift.EndTime,
+            EmployeeId = shift.EmployeeId
+        };
+        
+        public static Models.Shift ToDbo(this BusinessLayer.DTO.Shift.ShiftPostDTO shiftDto) =>
+            new Models.Shift()
+            {
+                StartTime = shiftDto.StartTime,
+                EndTime = shiftDto.EndTime,
+                EmployeeId = shiftDto.EmployeeId
+            };
+
+        public static void UpdateItem(this BusinessLayer.Models.Shift shift, ShiftUpdateDto shiftDto)
+        {
+            shift.StartTime = shiftDto.StartTime;
+            shift.EndTime = shiftDto.EndTime;
         }
     }
 }

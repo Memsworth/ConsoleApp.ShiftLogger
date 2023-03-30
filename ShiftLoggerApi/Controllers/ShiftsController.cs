@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BusinessLayer.DTO;
+using BusinessLayer.DTO.Shift;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -23,14 +25,14 @@ namespace ShiftLoggerApi.Controllers
 
         // GET: api/Shifts
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Shift>>> GetShifts()
+        public async Task<ActionResult<IEnumerable<ShiftDTO>>> GetShifts()
         {
-            return await _context.Shifts.ToListAsync();
+            return await _context.Shifts.Select(x => x.ToDto()).ToListAsync();
         }
 
         // GET: api/Shifts/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Shift>> GetShift(int id)
+        public async Task<ActionResult<ShiftDTO>> GetShift(int id)
         {
             var shift = await _context.Shifts.FindAsync(id);
 
@@ -39,21 +41,18 @@ namespace ShiftLoggerApi.Controllers
                 return NotFound();
             }
 
-            return shift;
+            return shift.ToDto();
         }
 
         // PUT: api/Shifts/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutShift(int id, Shift shift)
+        public async Task<IActionResult> PutShift(int id, ShiftUpdateDto shiftDTO)
         {
-            if (id != shift.ShiftId)
-            {
-                return BadRequest();
-            }
+            var shift = await _context.Shifts.FindAsync(id);
+            if (shift == null) return BadRequest();
 
-            _context.Entry(shift).State = EntityState.Modified;
-
+            shift.UpdateItem(shiftDTO);
             try
             {
                 await _context.SaveChangesAsync();
@@ -76,12 +75,13 @@ namespace ShiftLoggerApi.Controllers
         // POST: api/Shifts
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Shift>> PostShift(Shift shift)
+        public async Task<ActionResult<ShiftPostDTO>> PostShift(ShiftPostDTO shiftDTO)
         {
-            _context.Shifts.Add(shift);
+            var shiftItem = shiftDTO.ToDbo();
+            _context.Shifts.Add(shiftItem);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetShift", new { id = shift.ShiftId }, shift);
+            return CreatedAtAction("GetShift", new { id = shiftItem.ShiftId }, shiftItem.ToDto());
         }
 
         // DELETE: api/Shifts/5

@@ -1,7 +1,7 @@
 namespace BusinessLayer.DTO.Shift;
 
-public class ShiftEndDTO
+public class ShiftUpdateDto
 {
-    public int ShiftId { get; set; }
+    public DateTime StartTime { get; set; }
     public DateTime EndTime { get; set; }
 }
