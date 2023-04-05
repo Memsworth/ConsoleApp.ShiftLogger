@@ -1,6 +1,6 @@
 using System.Net.Http.Json;
+using System.Text.Json;
 using BusinessLayer.DTO.Employee;
-using BusinessLayer.DTO.Shift;
 using ShiftLoggerApp.Validation;
 
 namespace ShiftLoggerApp.Services;
@@ -25,10 +25,8 @@ public class EmployeeService : ICrudService<EmployeePostDTO>
         Console.WriteLine(newRequest.IsSuccessStatusCode ? "item updated": "error in update");
     }
 
-    public void Get(EmployeePostDTO serviceObject, Client httpClient)
-    {
-        throw new NotImplementedException();
-    }
+    
+
 
     public async Task<EmployeePostDTO> CreateServiceObject(UserInputValidator userInputService)
     {
@@ -43,5 +41,13 @@ public class EmployeeService : ICrudService<EmployeePostDTO>
             Email = email,
             Name = name
         };
+    }
+    
+    
+    public async Task<List<EmployeeDTO>?> Get(Client httpClient, string request)
+    {
+        var response = await httpClient.ApiClient.GetStreamAsync(request);
+        var data =  await JsonSerializer.DeserializeAsync<List<EmployeeDTO>?>(response);
+        return data;
     }
 }

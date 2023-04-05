@@ -23,6 +23,7 @@ while (true)
             await DoCrud(api, shiftService);
             break;
         case 3:
+            await DisplayItems2(api, shiftService);
             break;
         case 4:
             break;
@@ -31,30 +32,67 @@ while (true)
     }
 }
 
-async Task DoCrud<T>(Client httpClient, ICrudService<T> service)
+async Task DisplayItems2(Client httpClient, ShiftService shift)
 {
+    var data = await shift.Get(httpClient, "/api/Shifts");
+    DisplayService.DisplayTable(data, "Employee Data");
+}
+async Task DisplayItems(Client httpClient, EmployeeService employee)
+{
+    Console.WriteLine($"1 to display all, 2 to display by id");
     int choice = int.Parse(Console.ReadLine());
-    int objectId;
-    T item;
-    
     switch (choice)
     {
         case 1:
-            item = await service.CreateServiceObject(new UserInputValidator());
-            await service.Add(item, httpClient);
+            var data = await employee.Get(httpClient, $"/api/Employee");
+            DisplayService.DisplayTable(data, "Employee Data");
             break;
         case 2:
-            Console.Write("Write an ID to delete: ");
-            objectId = int.Parse(Console.ReadLine());
-            await service.Delete(objectId, httpClient);
+            Console.Write($"Enter EMP ID: ");
+            var empId = int.Parse(Console.ReadLine());
+            var data2 = await employee.Get(httpClient, $"api/Employee/{empId}");
+            DisplayService.DisplayTable(data2, "Employee Data");
+            break;
+    }
+}
+
+async Task DoCrud<T>(Client httpClient, ICrudService<T> service)
+{
+    var userInput = new UserInputValidator();
+    int choice = int.Parse(Console.ReadLine());
+    switch (choice)
+    {
+        case 1:
+            await PerformAdd(httpClient, service, userInput);
+            break;
+        case 2:
+            await PerformDelete(httpClient, service);
             break;
         case 3:
-            Console.Write("Write an ID to update: ");
-            objectId = int.Parse(Console.ReadLine());
-            item = await service.CreateServiceObject(new UserInputValidator());
-            await service.Update(objectId, item, httpClient);
+            await PerformUpdate(httpClient, service, userInput);
             break;
         case 4:
             return;
     }
+}
+
+async Task PerformAdd<T>(Client httpClient, ICrudService<T> service, UserInputValidator userInput)
+{
+    var item = await service.CreateServiceObject(userInput);
+    await service.Add(item, httpClient);
+}
+
+async Task PerformDelete<T>(Client httpClient, ICrudService<T> service)
+{
+    Console.Write("Write an ID to delete: ");
+    var objectId = int.Parse(Console.ReadLine());
+    await service.Delete(objectId, httpClient);
+}
+
+async Task PerformUpdate<T>(Client httpClient, ICrudService<T> service, UserInputValidator userInput)
+{
+    Console.Write("Write an ID to update: ");
+    var objectId = int.Parse(Console.ReadLine());
+    var item = await service.CreateServiceObject(userInput);
+    await service.Update(objectId, item, httpClient);
 }

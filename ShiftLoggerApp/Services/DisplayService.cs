@@ -4,7 +4,7 @@ namespace ShiftLoggerApp.Services;
 
 public class DisplayService
 {
-    private static void DisplayTable<T>(List<T>? data, string tableName) where T : class
+    public static void DisplayTable<T>(List<T>? data, string tableName) where T : class
     {
         ConsoleTableBuilder.From(data).WithTitle(tableName).ExportAndWriteLine();
     }

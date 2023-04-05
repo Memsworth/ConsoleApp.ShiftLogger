@@ -1,5 +1,5 @@
 using System.Net.Http.Json;
-using BusinessLayer.DTO.Employee;
+using System.Text.Json;
 using BusinessLayer.DTO.Shift;
 using ShiftLoggerApp.Validation;
 
@@ -25,11 +25,6 @@ public class ShiftService : ICrudService <ShiftPostDTO>
         Console.WriteLine(response.IsSuccessStatusCode ? "Shift updated" : "Error can't update");
     }
 
-    public void Get(ShiftPostDTO serviceObject, Client httpClient)
-    {
-        throw new NotImplementedException();
-    }
-
     public async Task<ShiftPostDTO> CreateServiceObject(UserInputValidator userInputService)
     {
         var startTime = userInputService.GetInput("Enter a start time", userInputService.GetValidShift);
@@ -44,4 +39,13 @@ public class ShiftService : ICrudService <ShiftPostDTO>
             EmployeeId = employeeId
         };
     }
+    
+    
+    public async Task<List<ShiftDTO>?> Get(Client httpClient, string request)
+    {
+        var response = await httpClient.ApiClient.GetStreamAsync(request);
+        var data =  await JsonSerializer.DeserializeAsync<List<ShiftDTO>?>(response);
+        return data;
+    }
+
 }
