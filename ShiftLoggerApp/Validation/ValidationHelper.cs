@@ -19,4 +19,6 @@ public static class ValidationHelper
         var match = regex.Match(input);
         return match.Success;
     }
+
+    public static bool ValidShift(string input) => DateTime.TryParse(input, out DateTime result);
 }

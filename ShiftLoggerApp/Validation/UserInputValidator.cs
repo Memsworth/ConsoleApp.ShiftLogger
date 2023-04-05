@@ -4,7 +4,7 @@ public class UserInputValidator
 {
     public string GetInput(string message, Func<string, bool> validatorFunc)
     {
-        Console.Write(message);
+        Console.Write($"{message}: ");
         string input;
         do
         {
@@ -20,4 +20,6 @@ public class UserInputValidator
     public bool GetValidDob(string input) => ValidationHelper.ValidateInput(input, ValidationHelper.DobRegex);
 
     public bool GetValidEmail(string input) => ValidationHelper.ValidEmail(input);
+
+    public bool GetValidShift(string input) => ValidationHelper.ValidShift(input);
 }
