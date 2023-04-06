@@ -1,4 +1,6 @@
-﻿using ShiftLoggerApp.Services;
+﻿using BusinessLayer.DTO.Employee;
+using BusinessLayer.DTO.Shift;
+using ShiftLoggerApp.Services;
 using ShiftLoggerApp.Validation;
 
 
@@ -23,7 +25,7 @@ while (true)
             await DoCrud(api, shiftService);
             break;
         case 3:
-            await DisplayItems2(api, shiftService);
+            await DisplayItems(api, employeeService);
             break;
         case 4:
             break;
@@ -32,26 +34,39 @@ while (true)
     }
 }
 
-async Task DisplayItems2(Client httpClient, ShiftService shift)
+
+//async Task DisplayItems3<T>(Client http, ICrudService<T> service)
 {
-    var data = await shift.Get(httpClient, "/api/Shifts");
-    DisplayService.DisplayTable(data, "Employee Data");
+  //  int choice = int.Parse(Console.ReadLine());
+
+    //switch (choice)
+    {
+        
+    }
+}
+
+//async Task DisplayItems2(Client httpClient, ShiftService shift)
+{
+  //  var items = await shift.Get(httpClient, "api/Employee");
+  //  DisplayService.DisplayTable(items, "shift table");
 }
 async Task DisplayItems(Client httpClient, EmployeeService employee)
 {
     Console.WriteLine($"1 to display all, 2 to display by id");
     int choice = int.Parse(Console.ReadLine());
+    List<EmployeeDTO?>? data = new List<EmployeeDTO?>();
     switch (choice)
     {
         case 1:
-            var data = await employee.Get(httpClient, $"/api/Employee");
+            data = await employee.Get(httpClient, $"/api/Employee");
             DisplayService.DisplayTable(data, "Employee Data");
             break;
         case 2:
             Console.Write($"Enter EMP ID: ");
             var empId = int.Parse(Console.ReadLine());
-            var data2 = await employee.Get(httpClient, $"api/Employee/{empId}");
-            DisplayService.DisplayTable(data2, "Employee Data");
+            var data2 = await employee.GetById(httpClient, empId);
+            data.Add(data2);
+            DisplayService.DisplayTable(data, "Employee Data");
             break;
     }
 }

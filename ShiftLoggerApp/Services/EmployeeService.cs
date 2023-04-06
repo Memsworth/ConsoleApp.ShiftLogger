@@ -25,7 +25,12 @@ public class EmployeeService : ICrudService<EmployeePostDTO>
         Console.WriteLine(newRequest.IsSuccessStatusCode ? "item updated": "error in update");
     }
 
-    
+    public async Task<T> Get<T>(Client httpClient, string requestUri)
+    {
+        var request = await httpClient.ApiClient.GetStringAsync($"{requestUri}");
+        var data = JsonSerializer.Deserialize<T>(request);
+        return data;
+    }
 
 
     public async Task<EmployeePostDTO> CreateServiceObject(UserInputValidator userInputService)
@@ -42,12 +47,18 @@ public class EmployeeService : ICrudService<EmployeePostDTO>
             Name = name
         };
     }
-    
-    
-    public async Task<List<EmployeeDTO>?> Get(Client httpClient, string request)
+
+    public async Task<List<EmployeeDTO>?> Get(Client httpClient, string requestUri)
     {
-        var response = await httpClient.ApiClient.GetStreamAsync(request);
-        var data =  await JsonSerializer.DeserializeAsync<List<EmployeeDTO>?>(response);
+        var request = await httpClient.ApiClient.GetStringAsync(requestUri);
+        var data = JsonSerializer.Deserialize<List<EmployeeDTO>>(request);
+        return data;
+    }
+    
+    public async Task<EmployeeDTO?> GetById(Client httpClient, int id)
+    {
+        var request = await httpClient.ApiClient.GetStringAsync($"api/Employee/{id}");
+        var data = JsonSerializer.Deserialize<EmployeeDTO?>(request);
         return data;
     }
 }

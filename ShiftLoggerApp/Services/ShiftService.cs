@@ -25,6 +25,11 @@ public class ShiftService : ICrudService <ShiftPostDTO>
         Console.WriteLine(response.IsSuccessStatusCode ? "Shift updated" : "Error can't update");
     }
 
+    //public Task<T> Get<T>(Client httpClient, string requestUri)
+    //{
+      //  throw new NotImplementedException();
+    //}
+
     public async Task<ShiftPostDTO> CreateServiceObject(UserInputValidator userInputService)
     {
         var startTime = userInputService.GetInput("Enter a start time", userInputService.GetValidShift);
@@ -40,12 +45,4 @@ public class ShiftService : ICrudService <ShiftPostDTO>
         };
     }
     
-    
-    public async Task<List<ShiftDTO>?> Get(Client httpClient, string request)
-    {
-        var response = await httpClient.ApiClient.GetStreamAsync(request);
-        var data =  await JsonSerializer.DeserializeAsync<List<ShiftDTO>?>(response);
-        return data;
-    }
-
 }
