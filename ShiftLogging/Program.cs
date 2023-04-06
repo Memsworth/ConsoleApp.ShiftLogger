@@ -26,14 +26,16 @@ async Task EndShift()
 {
     Console.Write("Enter your employee ID: ");
     int empId = int.Parse(Console.ReadLine());
+    
     var data = await shiftService.GetByEmp(empId);
+
     if (data is null)
     {
         Console.WriteLine("No active shift");
         return;
     }
-    
-    var item = data.OrderDescending().First();
+
+    var item = data.Last();
     if (item.EndTime != null)
     {
         Console.WriteLine("Error SHIFT ENDED");
@@ -55,13 +57,14 @@ async Task StartShift()
     int empId = int.Parse(Console.ReadLine());
     var currentShift = await MakeShift(empId);
     var data = await shiftService.GetByEmp(empId);
+
     if (data is null)
     {
         await shiftService.Add(currentShift);
         return;
     }
     //check if shit has empty space
-    var item = data.OrderDescending().First();
+    var item = data.Last();
     if (item.EndTime == null)
     {
         Console.WriteLine("ERROR, You are already in a shift");
