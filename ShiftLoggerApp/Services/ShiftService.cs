@@ -7,28 +7,36 @@ namespace ShiftLoggerApp.Services;
 
 public class ShiftService : ICrudService <ShiftPostDTO>
 {
-    public async Task Add(ShiftPostDTO serviceObject, Client httpClient)
+    private readonly Client _client;
+    public ShiftService(Client client)
     {
-        var response = await httpClient.ApiClient.PostAsJsonAsync("api/Shifts", serviceObject);
+        _client = client;
+    }
+    
+    public async Task Add(ShiftPostDTO serviceObject)
+    {
+        var response = await _client.ApiClient.PostAsJsonAsync("api/Shifts", serviceObject);
         Console.WriteLine(response.IsSuccessStatusCode ? "ShiftAdded" : "Error can't add");
     }
 
-    public async Task Delete(int serviceObjectId, Client httpClient)
+    public async Task Delete(int serviceObjectId)
     {
-        var response = await httpClient.ApiClient.DeleteAsync($"api/Shifts/{serviceObjectId}");
+        var response = await _client.ApiClient.DeleteAsync($"api/Shifts/{serviceObjectId}");
         Console.WriteLine(response.IsSuccessStatusCode ? "Shift deleted" : "Error can't delete");
     }
 
-    public async Task Update(int serviceObjectId, ShiftPostDTO serviceObject, Client httpClient)
+    public async Task Update(int serviceObjectId, ShiftPostDTO serviceObject)
     {
-        var response = await httpClient.ApiClient.PutAsJsonAsync($"api/Shifts/{serviceObjectId}", serviceObject);
+        var response = await _client.ApiClient.PutAsJsonAsync($"api/Shifts/{serviceObjectId}", serviceObject);
         Console.WriteLine(response.IsSuccessStatusCode ? "Shift updated" : "Error can't update");
     }
 
-    //public Task<T> Get<T>(Client httpClient, string requestUri)
-    //{
-      //  throw new NotImplementedException();
-    //}
+    public async Task<T> Get<T>(string requestUri)
+    {
+        var request = await _client.ApiClient.GetStringAsync($"{requestUri}");
+        var data = JsonSerializer.Deserialize<T>(request);
+        return data;
+    }
 
     public async Task<ShiftPostDTO> CreateServiceObject(UserInputValidator userInputService)
     {

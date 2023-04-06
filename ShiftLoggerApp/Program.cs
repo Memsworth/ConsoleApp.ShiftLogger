@@ -1,5 +1,4 @@
 ﻿using BusinessLayer.DTO.Employee;
-using BusinessLayer.DTO.Shift;
 using ShiftLoggerApp.Services;
 using ShiftLoggerApp.Validation;
 
@@ -8,7 +7,6 @@ var api = new Client("http://localhost:5043/");
 var employeeService = new EmployeeService();
 var shiftService = new ShiftService();
 
-//test
 while (true)
 {
     DisplayService.DisplayMenu();
@@ -35,12 +33,26 @@ while (true)
 }
 
 
-//async Task DisplayItems3<T>(Client http, ICrudService<T> service)
+async Task DisplayItems3<T>(Client http, ICrudService<T> service)
 {
-  //  int choice = int.Parse(Console.ReadLine());
-
-    //switch (choice)
+  int choice = int.Parse(Console.ReadLine());
+  string requestUri;
+  switch (choice)
     {
+        case 1:
+            requestUri = "api/Employee";
+            break;
+        case 2:
+            Console.Write("Employee id you want to see: ");
+            int empId = int.Parse(Console.ReadLine());
+            requestUri = $"api/Employee/{empId}";
+            break;
+        case 3:
+            requestUri = "api/Shifts";
+            break;
+        case 4:
+            Console.Write("Shift id you want to see: ");
+            int
         
     }
 }
@@ -54,17 +66,17 @@ async Task DisplayItems(Client httpClient, EmployeeService employee)
 {
     Console.WriteLine($"1 to display all, 2 to display by id");
     int choice = int.Parse(Console.ReadLine());
-    List<EmployeeDTO?>? data = new List<EmployeeDTO?>();
+    List<EmployeeDTO> data = new List<EmployeeDTO?>();
     switch (choice)
     {
         case 1:
-            data = await employee.Get(httpClient, $"/api/Employee");
+            data = await employee.Get<List<EmployeeDTO>>(httpClient, $"/api/Employee");
             DisplayService.DisplayTable(data, "Employee Data");
             break;
         case 2:
             Console.Write($"Enter EMP ID: ");
             var empId = int.Parse(Console.ReadLine());
-            var data2 = await employee.GetById(httpClient, empId);
+            var data2 = await employee.Get<EmployeeDTO?>(httpClient, $"api/Employee/{empId}");
             data.Add(data2);
             DisplayService.DisplayTable(data, "Employee Data");
             break;

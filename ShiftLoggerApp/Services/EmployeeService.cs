@@ -7,32 +7,38 @@ namespace ShiftLoggerApp.Services;
 
 public class EmployeeService : ICrudService<EmployeePostDTO>
 {
-    public async Task Add(EmployeePostDTO serviceObject, Client httpClient)
+    private readonly Client _client;
+
+    public EmployeeService(Client client)
     {
-        var response = await httpClient.ApiClient.PostAsJsonAsync("api/Employee", serviceObject);
+        _client = client;
+    }
+    
+    public async Task Add(EmployeePostDTO serviceObject)
+    {
+        var response = await _client.ApiClient.PostAsJsonAsync("api/Employee", serviceObject);
         Console.WriteLine(response.IsSuccessStatusCode ? "Item inserted" : "Error to post");
     }
 
-    public async Task Delete(int serviceObjectId, Client httpClient)
+    public async Task Delete(int serviceObjectId)
     {
-        var response = await httpClient.ApiClient.DeleteAsync($"api/Employee/{serviceObjectId}");
+        var response = await _client.ApiClient.DeleteAsync($"api/Employee/{serviceObjectId}");
         Console.WriteLine(response.IsSuccessStatusCode ? "Item deleted" : "Error to delete");
     }
 
-    public async Task Update(int serviceObjectId, EmployeePostDTO serviceObject, Client httpClient)
+    public async Task Update(int serviceObjectId, EmployeePostDTO serviceObject)
     {
-        var newRequest = await httpClient.ApiClient.PutAsJsonAsync($"api/Employee/{serviceObjectId}", serviceObject);
+        var newRequest = await _client.ApiClient.PutAsJsonAsync($"api/Employee/{serviceObjectId}", serviceObject);
         Console.WriteLine(newRequest.IsSuccessStatusCode ? "item updated": "error in update");
     }
 
-    public async Task<T> Get<T>(Client httpClient, string requestUri)
+    public async Task<T> Get<T>(string requestUri)
     {
-        var request = await httpClient.ApiClient.GetStringAsync($"{requestUri}");
+        var request = await _client.ApiClient.GetStringAsync($"{requestUri}");
         var data = JsonSerializer.Deserialize<T>(request);
         return data;
     }
-
-
+    
     public async Task<EmployeePostDTO> CreateServiceObject(UserInputValidator userInputService)
     {
         var name = userInputService.GetInput("Enter a name", userInputService.GetValidName);
@@ -48,17 +54,4 @@ public class EmployeeService : ICrudService<EmployeePostDTO>
         };
     }
 
-    public async Task<List<EmployeeDTO>?> Get(Client httpClient, string requestUri)
-    {
-        var request = await httpClient.ApiClient.GetStringAsync(requestUri);
-        var data = JsonSerializer.Deserialize<List<EmployeeDTO>>(request);
-        return data;
-    }
-    
-    public async Task<EmployeeDTO?> GetById(Client httpClient, int id)
-    {
-        var request = await httpClient.ApiClient.GetStringAsync($"api/Employee/{id}");
-        var data = JsonSerializer.Deserialize<EmployeeDTO?>(request);
-        return data;
-    }
 }
