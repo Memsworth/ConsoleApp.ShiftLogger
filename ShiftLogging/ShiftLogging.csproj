@@ -9,6 +9,11 @@
 
     <ItemGroup>
       <ProjectReference Include="..\BusinessLayer\BusinessLayer.csproj" />
+      <ProjectReference Include="..\ShiftLoggerApi\ShiftLoggerApi.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="ConsoleTableExt" Version="3.2.0" />
     </ItemGroup>
 
 </Project>
