@@ -1,9 +1,9 @@
 using System.Net.Http.Json;
 using System.Text.Json;
 using BusinessLayer.DTO.Employee;
-using ShiftLoggerApp.Validation;
+using ShiftAdminApp.Validation;
 
-namespace ShiftLoggerApp.Services;
+namespace ShiftAdminApp.Services;
 
 public class EmployeeService : ICrudService<EmployeePostDTO>
 {

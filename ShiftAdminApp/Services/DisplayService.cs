@@ -2,7 +2,7 @@ using BusinessLayer.DTO.Employee;
 using BusinessLayer.DTO.Shift;
 using ConsoleTableExt;
 
-namespace ShiftLoggerApp.Services;
+namespace ShiftAdminApp.Services;
 
 public class DisplayService
 {

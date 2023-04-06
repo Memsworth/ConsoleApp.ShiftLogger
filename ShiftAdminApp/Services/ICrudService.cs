@@ -1,6 +1,6 @@
-using ShiftLoggerApp.Validation;
+using ShiftAdminApp.Validation;
 
-namespace ShiftLoggerApp.Services;
+namespace ShiftAdminApp.Services;
 
 public interface ICrudService<T>
 {

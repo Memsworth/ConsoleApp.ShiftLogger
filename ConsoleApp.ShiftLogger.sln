@@ -9,7 +9,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessLayer", "DataAcce
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShiftLoggerApi", "ShiftLoggerApi\ShiftLoggerApi.csproj", "{4684A85F-50DA-48ED-97B4-A2CC8D96F09F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShiftLoggerApp", "ShiftLoggerApp\ShiftLoggerApp.csproj", "{6168B99D-9D92-40F5-B971-D59AC79723B5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShiftAdminApp", "ShiftAdminApp\ShiftAdminApp.csproj", "{6168B99D-9D92-40F5-B971-D59AC79723B5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShiftLogging", "ShiftLogging\ShiftLogging.csproj", "{07D7939D-172F-45E5-B717-769C4623F0F1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{6168B99D-9D92-40F5-B971-D59AC79723B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6168B99D-9D92-40F5-B971-D59AC79723B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6168B99D-9D92-40F5-B971-D59AC79723B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07D7939D-172F-45E5-B717-769C4623F0F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07D7939D-172F-45E5-B717-769C4623F0F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07D7939D-172F-45E5-B717-769C4623F0F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07D7939D-172F-45E5-B717-769C4623F0F1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

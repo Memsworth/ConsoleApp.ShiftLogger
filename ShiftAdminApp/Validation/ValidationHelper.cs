@@ -1,7 +1,7 @@
 using System.Net.Mail;
 using System.Text.RegularExpressions;
 
-namespace ShiftLoggerApp.Validation;
+namespace ShiftAdminApp.Validation;
 
 public static class ValidationHelper
 {

@@ -1,4 +1,4 @@
-namespace ShiftLoggerApp.Validation;
+namespace ShiftAdminApp.Validation;
 
 public class UserInputValidator
 {

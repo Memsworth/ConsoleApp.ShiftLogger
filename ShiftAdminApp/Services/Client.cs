@@ -1,4 +1,4 @@
-namespace ShiftLoggerApp.Services;
+namespace ShiftAdminApp.Services;
 
 public class Client
 {

@@ -1,7 +1,7 @@
 ﻿using BusinessLayer.DTO.Employee;
 using BusinessLayer.DTO.Shift;
-using ShiftLoggerApp.Services;
-using ShiftLoggerApp.Validation;
+using ShiftAdminApp.Services;
+using ShiftAdminApp.Validation;
 
 
 var api = new Client("http://localhost:5043/");
@@ -25,8 +25,6 @@ while (true)
             break;
         case 3:
             await DisplayService.DisplayItems(employeeService, shiftService);
-            break;
-        case 4:
             break;
         case 5:
             return;
