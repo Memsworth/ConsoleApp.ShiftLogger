@@ -22,9 +22,6 @@ This is a console application designed to track an employee's shift. When we thi
 - Testing API using Swagger
 
 - Testing an API using Postman
-## Source
-
-This is a part of the [TheCSharpAcademy](https://www.thecsharpacademy.com/) .NET Full Stack Dev roadmap 
 ## Feedback
 
 If you have any feedback, please reach out to me at abubakarahmed4497@outlook.com
