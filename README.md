@@ -24,5 +24,5 @@ This is a console application designed to track an employee's shift. When we thi
 - Testing an API using Postman
 ## Feedback
 
-If you have any feedback, please reach out to me at abubakarahmed4497@outlook.com
+If you have any feedback, please reach out to me @ abubakarahmed4497@outlook.com
 
